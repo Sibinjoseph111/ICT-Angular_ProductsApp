@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="card-header">
+        {{title}}
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <button class="btn btn-primary" (click)='toggleImage()'>{{showImage? 'Hide' : 'Show'}} Image</button>
+                        </th>
+                        <th>Product</th>
+                        <th>Code</th>
+                        <th>Availability</th>
+                        <th>Price</th>
+                        <th>Rating</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor= 'let product of products; let i = index;'>
+                        <td>
+                            <img *ngIf= 'showImage' 
+                            [src]= 'product.imageUrl'
+                            [title]= 'product.name'
+                            [style.width.px] = 'imageWidth'
+                            [style.margin.px] = 'imageMargin' 
+                            [alt] = 'product.name'>
+                        </td>
+                        <td> <p *ngIf= '!editProductData || i != productIndex; else editName'> {{product.name}}</p>
+                            <ng-template #editName>
+                                <input type="text" [(ngModel)]='product.name'>
+                            </ng-template>
+                        </td>
+                        <td> <p *ngIf= '!editProductData || i != productIndex; else editCode'> {{product.code}}</p>
+                            <ng-template #editCode>
+                                <input type="text" [(ngModel)]='product.code'>
+                            </ng-template>
+                        </td>
+                        <td> <p *ngIf= '!editProductData || i != productIndex; else editDate'> {{product.releaseDate}}</p>
+                            <ng-template #editDate>
+                                <input type="text" [(ngModel)]='product.releaseDate'>
+                            </ng-template>
+                        </td>
+                        <td> <p *ngIf= '!editProductData || i != productIndex; else editPrice'> {{product.price}}</p>
+                            <ng-template #editPrice>
+                                <input type="text" [(ngModel)]='product.price'>
+                            </ng-template>
+                        </td>
+                        <td> <p *ngIf= '!editProductData || i != productIndex; else editRating'> {{product.rating}}</p>
+                            <ng-template #editRating>
+                                <input type="text" ngModel name="product.rating" [(ngModel)]='product.rating'>
+                            </ng-template>
+                           
+                        </td>
+                        <td>
+                            <button *ngIf= '!editProductData || i != productIndex' class="btn btn-success" style="margin-right: 15px;" (click)="editProduct(product, i)">Edit</button>
+                            <button *ngIf= 'editProductData && i == productIndex' class="btn btn-primary" style="margin-right: 15px;" (click)="updateProduct(product)">Update</button>
+                            <button class="btn btn-danger" (click)="deleteProduct(product.productId)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
